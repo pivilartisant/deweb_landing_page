@@ -1,24 +1,22 @@
 import React, { useState, useRef } from 'react';
-import './Styles/draggable.css'; // Import the CSS file for styling
+
 
 interface WindowProps {
-    children: React.ReactNode;
-    title: string;
-    height: string;
-    width?: string;
+  children: React.ReactNode;
+  title: string;
 }
 
-export function Window(props:WindowProps) {
-  const { children, title, height, width = "" } = props;
-  const [position, setPosition] = useState({ x: 100, y: 200 });
+export function Window(props: WindowProps) {
+  const { children, title} = props;
+  const [position, setPosition] = useState({ x:0, y: 0 });
   const boxRef = useRef(null);
-  const [isReduced, setIsReduced] = useState(false);
+  const [isReduced, setIsReduced] = useState(true);
 
-  const handleMouseDown = (e:any) => {
+  const handleMouseDown = (e: any) => {
     const startX = e.clientX - position.x;
     const startY = e.clientY - position.y;
 
-    const handleMouseMove = (e:any) => {
+    const handleMouseMove = (e: any) => {
       setPosition({
         x: e.clientX - startX,
         y: e.clientY - startY,
@@ -32,32 +30,36 @@ export function Window(props:WindowProps) {
 
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
+  };
 
-  };
-  
-  function handleCloseClick ()  {
+  function handleCloseClick() {
+    setPosition({ x: 0, y: 0 });
     setIsReduced(!isReduced);
-  };
+  }
 
   return (
     <div
-      className={`draggable-box${isReduced ? '-reduce-box' : ''}`}
+     className={`bg-primary border-2 border-gray-500 absolute w-[70%] ${isReduced ? 'h-fit bottom-0 left-0 w-[33%]' : 'h-[70%]'}`}
       ref={boxRef}
-      style={{ transform: `translate(${position.x}px, ${position.y}px)`, height:`${height}`, width:`${width}` }}
+      style={{
+        transform: `translate(${position.x}px, ${position.y}px)`,
+      }}
+      onMouseDown={handleMouseDown}
     >
-      <div className="draggable-box-bar"
-       onMouseDown={handleMouseDown}
-       >
+      <div
+        className="flex items-center justify-between  z-10 w-full h-fit bg-blue-900 p-2 cursor-move text-white"
+      >
         {title}
-       <div 
-       onClick={() => handleCloseClick()}
-       className='draggable-box-bar-close'>{isReduced ? "□": "X"}</div>
+        <div
+          onClick={() => handleCloseClick()}
+          className="pr-2 cursor-pointer text-white"
+        >
+          {isReduced ? '□' : 'x'}
+        </div>
       </div>
-      <div className='draggable-box-content'>
-
-      {isReduced ? null : children}
-      </div>
+       <div className={`p-[10px] flex flex-col gap-[10px] ${isReduced ? 'hidden' : ''}`}>
+          {isReduced ? null : children}
+        </div>
     </div>
   );
-};
-
+}
