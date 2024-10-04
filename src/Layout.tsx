@@ -1,3 +1,5 @@
+// import { colors, setTheme } from "./colors/colors";
+
 interface LayoutProps {
     children: React.ReactNode;
 }
@@ -17,11 +19,13 @@ interface LayoutProps {
     // 1) Explain DeWeb and different possibilites 
     // 2) Provide clear information & documentation 
 
+
 export function Layout(props:LayoutProps){
     const {children} = props;
     return (
         <div
-        style={{}}>
+            className="neon_blue bg-primary text-secondary w-screen h-screen"
+        >
             {children}
         </div>
     )
