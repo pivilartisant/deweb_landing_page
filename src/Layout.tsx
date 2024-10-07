@@ -1,3 +1,6 @@
+
+import { useThemeStore } from "./store/store";
+
 interface LayoutProps {
     children: React.ReactNode;
 }
@@ -17,11 +20,19 @@ interface LayoutProps {
     // 1) Explain DeWeb and different possibilites 
     // 2) Provide clear information & documentation 
 
+
+
 export function Layout(props:LayoutProps){
     const {children} = props;
+     const {theme} = useThemeStore();
     return (
         <div
-        style={{}}>
+        className="layout"
+        style={{
+            backgroundColor: `${theme.backgroundColor}`,
+            color: `${theme.textColor}`,
+        }}>
+            {/* <button onClick={() => changeTheme()}>Change Theme</button> */}
             {children}
         </div>
     )
