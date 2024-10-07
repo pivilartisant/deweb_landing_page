@@ -1,16 +1,23 @@
-import { Baseline } from './components/Baseline';
-import { Countdown } from './components/Countdown';
-import { CTA } from './components/CTA';
-import { Logo } from './components/Logo';
+import { Base } from './Base';
+import { Window } from './components/Window';
 import { Layout } from './Layout';
 
 function App() {
+
+  function handleClick() {
+    console.log("Clicked");
+  }
   return (
     <Layout>
-      <Logo />
-      <Baseline/>
-      <Countdown/>
-      <CTA/>
+      <Base />
+      <Window title="Window 1" >
+        <div>Content 1</div>
+        <button
+        onClick={() => handleClick()}>
+          Console.log me
+          </button>
+          
+      </Window>
     </Layout>
   );
 }
